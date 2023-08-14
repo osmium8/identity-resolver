@@ -6,12 +6,27 @@ from contact.models import Contact
 from contact.serializers import IdentityRequestSerializer, IdentityResponseSerializer
 from contact.helpers import aggregate_linked_contacts
 
+from drf_spectacular.utils import extend_schema, OpenApiResponse
+
 
 class IdentityAPIView(APIView):
     """
     Fetch all linked contacts if exists or creates new
     """
 
+    serializer_class = IdentityRequestSerializer
+
+    @extend_schema(
+        summary="Create a new resource",
+        responses={
+            200: OpenApiResponse(
+                response=IdentityResponseSerializer, description="All linked contacts."
+            ),
+            400: OpenApiResponse(
+                description="Atleast one field is required among email and phoneNumber"
+            ),
+        },
+    )
     def post(self, request):
         serializer = IdentityRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
