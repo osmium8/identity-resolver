@@ -1,6 +1,6 @@
 from contact.models import Contact
 
-def aggregate_linked_contacts(primary_contact: Contact, secondary_contacts: list[Contact]):
+def aggregate_linked_contacts(primary_contact: Contact, secondary_contacts: list):
     """
     Returns: dictionary containing all emails and phoneNumbers
         {
