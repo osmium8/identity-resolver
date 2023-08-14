@@ -51,3 +51,4 @@ venv
 
 # example database
 drf_example
+.vscode/settings.json
