@@ -115,7 +115,13 @@ class Contact(models.Model):
             return self.primary_contact
 
     def __str__(self):
-        return self.phone_number if self.phone_number else 'NA' + ', ' + self.email if self.email else 'NA'
+        return (
+            self.phone_number
+            if self.phone_number
+            else "[null]" + ", " + self.email
+            if self.email
+            else "[null]"
+        )
 
     class Meta:
         unique_together = ("phone_number", "email")
