@@ -96,6 +96,19 @@ class ContactManager(models.Manager):
             return contact.get_primary()
         else:
             return Contact.objects.create(phone_number=phone_number, link_precedence=Contact.LinkPrecedence.PRIMARY)
+        
+    def get_or_create_email(self, email: str) -> object:
+        """
+        Returns the primary contact for given email
+        after performing identity resolution
+
+        Creates new primary contact if identity is not resolved
+        """
+        contact = Contact.objects.filter(email=email).first()
+        if contact:
+            return contact.get_primary()
+        else:
+            return Contact.objects.create(email=email, link_precedence=Contact.LinkPrecedence.PRIMARY)
 
 
 class Contact(models.Model):
