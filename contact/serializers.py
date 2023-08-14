@@ -15,3 +15,14 @@ class IdentityRequestSerializer(serializers.Serializer):
             'phone_number': {'required': False},
             'email': {'required': False}
         }
+
+
+class AggregatedContactsSerializer(serializers.Serializer):
+    primaryContactId = serializers.IntegerField()
+    emails = serializers.ListField()
+    phoneNumbers = serializers.ListField()
+    secondaryContactIds = serializers.ListField()
+
+
+class IdentityResponseSerializer(serializers.Serializer):
+    contact = AggregatedContactsSerializer(many=False)
