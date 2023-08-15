@@ -48,9 +48,7 @@ class IdentityAPIView(APIView):
         else:
             primary_contact = Contact.objects.get_or_create_email(validated_email)
 
-        secondary_contacts = Contact.objects.filter(
-            primary_contact__id=primary_contact.id
-        )
+        secondary_contacts = Contact.objects.secondary_contacts(primary_contact.id)
         aggregated_contacts = aggregate_linked_contacts(
             primary_contact, secondary_contacts
         )

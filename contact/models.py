@@ -1,7 +1,17 @@
 from django.db import models
 
+class ContactQuerySet(models.QuerySet):
+    def secondary_contacts(self, primary_contact_id):
+        return self.filter(primary_contact__id=primary_contact_id)
 
 class ContactManager(models.Manager):
+
+    def get_queryset(self):
+        return ContactQuerySet(self.model, using=self._db)
+
+    def secondary_contacts(self, primary_contact_id):
+        return self.get_queryset().secondary_contacts(primary_contact_id)
+    
     def get_or_create_phone_email(self, phone_number: str, email: str) -> object:
         """
         Returns the primary contact for given phone_number/email
