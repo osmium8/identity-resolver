@@ -1,0 +1,15 @@
+Table contacts {
+  id integer [primary key]
+  phone_number varchar
+  email varchar
+  primary_contact_id integer [ref: > contacts.id]
+  link_precedence link_precedence
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp
+}
+
+enum link_precedence {
+    PRIMARY
+    SECONDARY
+}
