@@ -22,6 +22,19 @@ def aggregate_linked_contacts(primary_contact: Contact, secondary_contacts: list
         if (contact.phone_number):
             phoneNumbers.add(contact.phone_number)
 
+    # move primary phone and primary email to the first position
+    phoneNumbers.discard(primary_contact.phone_number)
+    emails.discard(primary_contact.email)
+    
+    phoneNumbers = list(phoneNumbers)
+    emails = list(emails)
+
+    if primary_contact.phone_number:
+        phoneNumbers.insert(0, primary_contact.phone_number)
+    
+    if primary_contact.email:
+        emails.insert(0, primary_contact.email)
+
     return {
         "primaryContactId": primaryContactId,
         "emails": emails,
